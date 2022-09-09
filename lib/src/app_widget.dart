@@ -1,4 +1,6 @@
+import 'package:app_listagem/src/views/add_page.dart';
 import 'package:app_listagem/src/views/main_page.dart';
+import 'package:app_listagem/src/views/update_page.dart';
 import 'package:flutter/material.dart';
 
 class AppWidget extends StatelessWidget {
@@ -14,6 +16,8 @@ class AppWidget extends StatelessWidget {
       initialRoute: '/',
       routes: {
         "/": (context) => const MainPage(),
+        "/add_page": (context) => const AddPage(),
+        "/update_page": (context) => const UpdatePage()
       },
     );
   }

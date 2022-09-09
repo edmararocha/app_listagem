@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
                           backgroundColor: Colors.white60, elevation: 0),
                       child: const Icon(
                         Icons.delete,
-                        color: Colors.purple,
+                        color: Colors.deepPurple,
                       ),
                     ),
                   ],
@@ -65,7 +65,9 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, "/add_page");
+        },
         backgroundColor: Colors.deepPurpleAccent,
         child: const Icon(Icons.add),
       ),
