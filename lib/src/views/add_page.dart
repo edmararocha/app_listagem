@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../components/customField.dart';
 
+enum Gender { feminino, masculino }
+
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
 
@@ -10,8 +12,7 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
-
-	int? _value = 1;
+  Gender? _humangender = Gender.feminino;
 
   @override
   Widget build(BuildContext context) {
@@ -21,42 +22,112 @@ class _AddPageState extends State<AddPage> {
         backgroundColor: Colors.deepPurple,
       ),
       // ignore: avoid_unnecessary_containers
-      body: Container(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(right: 15.0, left: 15.0, top: 50.0),
+          padding: const EdgeInsets.only(right: 25.0, left: 25.0, top: 50.0),
           child: Column(
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              const CustomField(labelText: 'Nome'),
+              const CustomField(
+                labelText: 'Nome',
+                type: TextInputType.name,
+              ),
               const SizedBox(
                 height: 40,
               ),
-              const CustomField(labelText: "Email"),
-              const SizedBox(
-                height: 60,
+              const CustomField(
+                labelText: "Email",
+                type: TextInputType.emailAddress,
               ),
-              // Row(
-              //   children: <Widget>[
-              //     for (int i = 1; i <= 2; i++)
-              //       ListTile(
-              //         title: Text(
-              //           'Radio $i',
-              //           style: Theme.of(context).textTheme.subtitle1?.copyWith(
-              //               color: i == 5 ? Colors.black38 : Colors.black),
-              //         ),
-              //         leading: Radio(
-              //           value: i,
-              //           groupValue: _value,
-              //           activeColor: Color(0xFF6200EE),
-              //           onChanged: (value) => {
-							// 						setState(() {
-							// 							_value = value as int?;
-							// 						})
-							// 					},
-              //         ),
-              //       ),
-              //   ],
-              // )
+              const SizedBox(
+                height: 40,
+              ),
+              Column(
+                children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Sexo",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.deepPurple,
+                        fontSize: 18),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Row(
+                        children: [
+                          Radio(
+                              activeColor: Colors.deepPurple,
+                              value: Gender.feminino,
+                              groupValue: _humangender,
+                              onChanged: (Gender? value) {
+                                setState(() {
+                                  _humangender = value;
+                                });
+                              }),
+                          const Expanded(
+                            child: Text('Feminino'),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Row(
+                        children: [
+                          Radio(
+                              activeColor: Colors.deepPurple,
+                              value: Gender.masculino,
+                              groupValue: _humangender,
+                              onChanged: (Gender? value) {
+                                setState(() {
+                                  _humangender = value;
+                                });
+                              }),
+                          const Expanded(
+                            child: Text('Masculino'),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ]),
+              const SizedBox(
+                height: 50,
+              ),
+              const CustomField(
+                labelText: "Sobre",
+                type: TextInputType.text,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                onPressed: () => {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+                child: const Text(
+                  "Adicionar",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                ),
+              )
             ],
           ),
         ),
