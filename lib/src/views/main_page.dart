@@ -1,3 +1,4 @@
+import 'package:app_listagem/src/views/add_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -66,7 +67,7 @@ class _MainPageState extends State<MainPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushReplacementNamed(context, "/add_page");
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const AddPage()));
         },
         backgroundColor: Colors.deepPurpleAccent,
         child: const Icon(Icons.add),
