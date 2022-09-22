@@ -1,4 +1,7 @@
-import 'package:app_listagem/src/views/add_page.dart';
+// ignore_for_file: unused_label
+
+import 'package:app_listagem/src/database/databaseHelper.dart';
+
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -9,7 +12,20 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<String> lista = ["Pedro", "Paulo", "José", "Maria", "Socorro", "Joana"];
+  List<Map<String, dynamic>> _patients = [];
+  final dbHelper = DatabaseHelper.instance;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    dbHelper.queryAllRows().then((list) {
+      setState(() {
+        _patients = list;
+        _loading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,47 +47,74 @@ class _MainPageState extends State<MainPage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
-          child: ListView.separated(
-            itemCount: lista.length,
-            itemBuilder: (BuildContext context, int index) {
-              // ignore: prefer_const_constructors
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      lista[index],
-                      style:
-                          const TextStyle(color: Colors.black54, fontSize: 20),
-                      textAlign: TextAlign.center,
-                    ),
-                    ElevatedButton(
-                      onPressed: () => {},
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white60, elevation: 0),
-                      child: const Icon(
-                        Icons.delete,
-                        color: Colors.deepPurple,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-          ),
-        ),
+            padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
+            child: _buildPatientsList()),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => const AddPage()));
+          Navigator.pushReplacementNamed(context, '/add_page');
         },
         backgroundColor: Colors.deepPurpleAccent,
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Widget _buildPatientsList() {
+    if (_patients.isEmpty) {
+      return Center(
+        child: _loading
+            ? const CircularProgressIndicator(
+                color: Colors.deepPurple,
+              )
+            : const Text("Nenhum paciente cadastrado."),
+      );
+    } else {
+      return ListView.separated(
+        itemCount: _patients.length,
+        itemBuilder: (BuildContext context, int index) {
+          // ignore: prefer_const_constructors
+          return GestureDetector(
+            onTap: () => {Navigator.pushReplacementNamed(context, '/add_page')},
+
+            child: Padding(
+            padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  _patients[index]['_name'],
+                  style: const TextStyle(color: Colors.black54, fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    _deletar(_patients[index]['_id']);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white60, elevation: 0),
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+              ],
+            ),
+          ));
+        },
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      );
+    }
+  }
+
+  void _deletar(int id) async {
+    setState(() {
+      dbHelper.queryAllRows().then((list) {
+        setState(() {
+          _patients = list;
+          _loading = false;
+        });
+      });
+    });
   }
 }

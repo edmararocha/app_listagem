@@ -27,26 +27,31 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: ElevatedButton(
+            onPressed: () => {Navigator.pushReplacementNamed(context, '/')},
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple, elevation: 0),
+            child: const Icon(Icons.arrow_back),
+          ),
         title: const Text("Adicionar Paciente"),
         backgroundColor: Colors.deepPurple,
       ),
-      // ignore: avoid_unnecessary_containers
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(right: 25.0, left: 25.0, top: 50.0),
           child: Column(
-            // ignore: prefer_const_literals_to_create_immutables
             children: [
-              const CustomField(
-                labelText: 'Nome',
-                type: TextInputType.name,
-              ),
+              CustomField(
+                  labelText: 'Nome',
+                  type: TextInputType.name,
+                  controller: nameText),
               const SizedBox(
                 height: 40,
               ),
-              const CustomField(
+              CustomField(
                 labelText: "Email",
                 type: TextInputType.emailAddress,
+                controller: emailText,
               ),
               const SizedBox(
                 height: 40,
@@ -117,9 +122,10 @@ class _AddPageState extends State<AddPage> {
               const SizedBox(
                 height: 50,
               ),
-              const CustomField(
+              CustomField(
                 labelText: "Sobre",
                 type: TextInputType.text,
+                controller: aboutText,
               ),
               const SizedBox(
                 height: 50,
@@ -127,7 +133,7 @@ class _AddPageState extends State<AddPage> {
               ElevatedButton(
                 onPressed: () {
                   _addPatient();
-                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacementNamed('/');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,

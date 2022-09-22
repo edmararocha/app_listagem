@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations, depend_on_referenced_packages, file_names, avoid_print
+
 import 'dart:async';
 import 'dart:io';
 
