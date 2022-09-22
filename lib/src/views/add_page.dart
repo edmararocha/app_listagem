@@ -1,3 +1,4 @@
+import 'package:app_listagem/src/database/databaseHelper.dart';
 import 'package:flutter/material.dart';
 
 import '../components/customField.dart';
@@ -13,6 +14,14 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   Gender? _humangender = Gender.feminino;
+
+  final dbHelper = DatabaseHelper.instance;
+
+  final TextEditingController nameText = TextEditingController();
+  final TextEditingController emailText = TextEditingController();
+  final TextEditingController aboutText = TextEditingController();
+
+  String gender = 'feminino';
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +51,7 @@ class _AddPageState extends State<AddPage> {
               const SizedBox(
                 height: 40,
               ),
-              Column(
-                children: [
+              Column(children: [
                 Container(
                   alignment: Alignment.centerLeft,
                   child: const Text(
@@ -71,6 +79,7 @@ class _AddPageState extends State<AddPage> {
                               onChanged: (Gender? value) {
                                 setState(() {
                                   _humangender = value;
+                                  gender = 'feminino';
                                 });
                               }),
                           const Expanded(
@@ -93,6 +102,7 @@ class _AddPageState extends State<AddPage> {
                               onChanged: (Gender? value) {
                                 setState(() {
                                   _humangender = value;
+                                  gender = 'masculino';
                                 });
                               }),
                           const Expanded(
@@ -115,7 +125,10 @@ class _AddPageState extends State<AddPage> {
                 height: 50,
               ),
               ElevatedButton(
-                onPressed: () => {},
+                onPressed: () {
+                  _addPatient();
+                  Navigator.pop(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
                   elevation: 3,
@@ -133,5 +146,15 @@ class _AddPageState extends State<AddPage> {
         ),
       ),
     );
+  }
+  _addPatient() async {
+    Map<String, dynamic> row = {
+      DatabaseHelper.columnName: nameText.text,
+      DatabaseHelper.columnEmail: emailText.text,
+      DatabaseHelper.columnGender: gender,
+      DatabaseHelper.columnAbout: aboutText.text
+    };
+    final id = await dbHelper.insert(row);
+    print('linha inserida id: $id');
   }
 }
