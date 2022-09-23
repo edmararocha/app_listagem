@@ -118,6 +118,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _deletar(int id) async {
+    await dbHelper.delete(id);
     setState(() {
       dbHelper.queryAllRows().then((list) {
         setState(() {
