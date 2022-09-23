@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sqflite:
   path_provider:
+  js: ^0.6.4
   
 
 dev_dependencies:
