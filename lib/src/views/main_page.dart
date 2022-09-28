@@ -1,3 +1,4 @@
+import 'package:app_listagem/src/components/patientItem.dart';
 import 'package:app_listagem/src/database/databaseHelper.dart';
 import 'package:app_listagem/src/views/update_page.dart';
 import 'package:flutter/material.dart';
@@ -88,27 +89,12 @@ class _MainPageState extends State<MainPage> {
                   },
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _patients[index]['_name'],
-                      style:
-                          const TextStyle(color: Colors.black54, fontSize: 20),
-                      textAlign: TextAlign.center,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _deletar(_patients[index]['_id']);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white60, elevation: 0),
-                      child: const Icon(
-                        Icons.delete,
-                        color: Colors.deepPurple,
-                      ),
-                    ),
-                  ],
+                child: PatientItem(
+                  index: index,
+                  patients: _patients,
+                  onPressed: () {
+                    _deletar(_patients[index]['_id']);
+                  },
                 ),
               ));
         },
@@ -132,15 +118,15 @@ class _MainPageState extends State<MainPage> {
   showAlertDialogInfo(BuildContext context) {
     // configura o button
     Widget okButton = TextButton(
-      child: Text("OK"),
+      child: const Text("OK"),
       onPressed: () {
         Navigator.pop(context);
       },
     );
     // configura o  AlertDialog
     AlertDialog alerta = AlertDialog(
-      title: Text("Ajuda"),
-      content: Text(
+      title: const Text("Ajuda"),
+      content: const Text(
           '''Clique em um paciente para editá-lo ou pressione e segure para excluí-lo. '''),
       actions: [
         okButton,

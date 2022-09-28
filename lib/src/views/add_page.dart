@@ -2,6 +2,7 @@ import 'package:app_listagem/src/database/databaseHelper.dart';
 import 'package:flutter/material.dart';
 
 import '../components/customField.dart';
+import '../models/PatientModel.dart';
 
 enum Gender { feminino, masculino }
 
@@ -154,13 +155,12 @@ class _AddPageState extends State<AddPage> {
     );
   }
   _addPatient() async {
-    Map<String, dynamic> row = {
-      DatabaseHelper.columnName: nameText.text,
-      DatabaseHelper.columnEmail: emailText.text,
-      DatabaseHelper.columnGender: gender,
-      DatabaseHelper.columnAbout: aboutText.text
-    };
-    final id = await dbHelper.insert(row);
-    print('linha inserida id: $id');
+    PatientModel patient = PatientModel();
+    patient.name = nameText.text;
+    patient.email = emailText.text;
+    patient.gender = gender;
+    patient.about = aboutText.text;
+    
+    await dbHelper.insert(patient);
   }
 }

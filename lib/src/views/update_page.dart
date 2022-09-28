@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../components/customField.dart';
 import '../database/databaseHelper.dart';
+import '../models/PatientModel.dart';
 
 enum Gender { feminino, masculino }
 
@@ -17,6 +18,7 @@ class UpdatePage extends StatefulWidget {
 
   @override
   State<UpdatePage> createState() =>
+    // ignore: no_logic_in_create_state
     _UpdatePageState(id, name, email, gender, about);
 }
 
@@ -25,9 +27,9 @@ class _UpdatePageState extends State<UpdatePage> {
 
   final dbHelper = DatabaseHelper.instance;
 
-  final TextEditingController nameText = TextEditingController();
-  final TextEditingController emailText = TextEditingController();
-  final TextEditingController aboutText = TextEditingController();
+  TextEditingController nameText = TextEditingController();
+  TextEditingController emailText = TextEditingController();
+  TextEditingController aboutText = TextEditingController(); 
 
   final int? id;
   final String? name;
@@ -40,6 +42,9 @@ class _UpdatePageState extends State<UpdatePage> {
   @override
   void initState() {
     _verifyGender();
+    nameText.text = name!;
+    emailText.text = email!;
+    aboutText.text = about!;
     super.initState();
   }
 
@@ -53,7 +58,7 @@ class _UpdatePageState extends State<UpdatePage> {
               backgroundColor: Colors.deepPurple, elevation: 0),
           child: const Icon(Icons.arrow_back),
         ),
-        title: const Text("Adicionar Paciente"),
+        title: const Text("Atualizar Paciente"),
         backgroundColor: Colors.deepPurple,
       ),
       body: SingleChildScrollView(
@@ -163,7 +168,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   ),
                 ),
                 child: const Text(
-                  "Adicionar",
+                  "Atualizar",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
               )
@@ -175,19 +180,17 @@ class _UpdatePageState extends State<UpdatePage> {
   }
 
   _updatePatient() async {
-    Map<String, dynamic> row = {
-      DatabaseHelper.columnId: this.id,
-      DatabaseHelper.columnName: nameText.text,
-      DatabaseHelper.columnEmail: emailText.text,
-      DatabaseHelper.columnGender: gender,
-      DatabaseHelper.columnAbout: aboutText.text
-    };
-    final id = await dbHelper.update(row);
-    print('linha inserida id: $id');
+    PatientModel patient = PatientModel();
+    patient.id = id;
+    patient.name = nameText.text;
+    patient.email = emailText.text;
+    patient.gender = gender;
+    patient.about = aboutText.text;
+
+    await dbHelper.update(patient);
   }
 
   _verifyGender() {
-    print("GENDER: $gender");
     if (gender == 'feminino') {
       _humangender = Gender.feminino;
     } else {
