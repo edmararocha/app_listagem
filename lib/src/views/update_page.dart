@@ -18,8 +18,8 @@ class UpdatePage extends StatefulWidget {
 
   @override
   State<UpdatePage> createState() =>
-    // ignore: no_logic_in_create_state
-    _UpdatePageState(id, name, email, gender, about);
+      // ignore: no_logic_in_create_state
+      _UpdatePageState(id, name, email, gender, about);
 }
 
 class _UpdatePageState extends State<UpdatePage> {
@@ -29,7 +29,7 @@ class _UpdatePageState extends State<UpdatePage> {
 
   TextEditingController nameText = TextEditingController();
   TextEditingController emailText = TextEditingController();
-  TextEditingController aboutText = TextEditingController(); 
+  TextEditingController aboutText = TextEditingController();
 
   final int? id;
   final String? name;
@@ -181,13 +181,12 @@ class _UpdatePageState extends State<UpdatePage> {
 
   _updatePatient() async {
     PatientModel patient = PatientModel();
-    patient.id = id;
     patient.name = nameText.text;
     patient.email = emailText.text;
     patient.gender = gender;
     patient.about = aboutText.text;
 
-    await dbHelper.update(patient);
+    await dbHelper.update(patient, id!);
   }
 
   _verifyGender() {

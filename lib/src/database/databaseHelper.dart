@@ -14,8 +14,8 @@ class DatabaseHelper {
 
   static final table = "patients";
 
-  static final columnId = "_id";
-  static final columnName = "_name";
+  static final columnId = "id";
+  static final columnName = "name";
   static final columnEmail = "email";
   static final columnGender = "gender";
   static final columnAbout = "about";
@@ -43,9 +43,10 @@ class DatabaseHelper {
   }
 
   Future<FutureOr<void>> _onCreate(Database db, int version) async {
+    print("foi inserido as informações");
     await db.execute('''
       CREATE TABLE $table (
-        $columnId INTEGER PRIMARY KEY,
+        $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
         $columnName TEXT NOT NULL,
         $columnEmail TEXT NOT NULL,
         $columnGender TEXT NOT NULL,
@@ -70,9 +71,8 @@ class DatabaseHelper {
         await db!.rawQuery("SELECT COUNT(*) FROM $table"));
   }
 
-  Future<int?> update(PatientModel row) async {
+  Future<int?> update(PatientModel row, int id) async {
     Database? db = await instance.database;
-    int? id = row.id;
     return await db!
         .update(table, row.toJson(), where: "$columnId = ?", whereArgs: [id]);
   }

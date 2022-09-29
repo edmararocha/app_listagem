@@ -19,7 +19,7 @@ class PatientItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          patients[index]['_name'],
+          patients[index]['name'],
           style: const TextStyle(color: Colors.black54, fontSize: 20),
           textAlign: TextAlign.center,
         ),

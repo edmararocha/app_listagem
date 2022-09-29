@@ -29,11 +29,11 @@ class _AddPageState extends State<AddPage> {
     return Scaffold(
       appBar: AppBar(
         leading: ElevatedButton(
-            onPressed: () => {Navigator.pushReplacementNamed(context, '/')},
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple, elevation: 0),
-            child: const Icon(Icons.arrow_back),
-          ),
+          onPressed: () => {Navigator.pushReplacementNamed(context, '/')},
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepPurple, elevation: 0),
+          child: const Icon(Icons.arrow_back),
+        ),
         title: const Text("Adicionar Paciente"),
         backgroundColor: Colors.deepPurple,
       ),
@@ -154,13 +154,14 @@ class _AddPageState extends State<AddPage> {
       ),
     );
   }
+
   _addPatient() async {
     PatientModel patient = PatientModel();
     patient.name = nameText.text;
     patient.email = emailText.text;
     patient.gender = gender;
     patient.about = aboutText.text;
-    
+
     await dbHelper.insert(patient);
   }
 }

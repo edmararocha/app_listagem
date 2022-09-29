@@ -79,8 +79,8 @@ class _MainPageState extends State<MainPage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => UpdatePage(
-                                id: _patients[index]['_id'],
-                                name: _patients[index]['_name'],
+                                id: _patients[index]['id'],
+                                name: _patients[index]['name'],
                                 email: _patients[index]['email'],
                                 gender: _patients[index]['gender'],
                                 about: _patients[index]['about'],
@@ -93,7 +93,7 @@ class _MainPageState extends State<MainPage> {
                   index: index,
                   patients: _patients,
                   onPressed: () {
-                    _deletar(_patients[index]['_id']);
+                    _deletar(_patients[index]['id']);
                   },
                 ),
               ));
