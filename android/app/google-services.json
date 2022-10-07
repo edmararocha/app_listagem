@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "218217763472",
+    "firebase_url": "https://app-listagem-default-rtdb.firebaseio.com",
+    "project_id": "app-listagem",
+    "storage_bucket": "app-listagem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218217763472:android:c54fb5d6bcb5f802a37e15",
+        "android_client_info": {
+          "package_name": "com.example.app_listagem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218217763472-mnp3o0k3gq9o8ff68jmeffs8jalo7fpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDxYzC4AQwn092U-iQ-AdZXR5_W0zMV_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218217763472-mnp3o0k3gq9o8ff68jmeffs8jalo7fpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

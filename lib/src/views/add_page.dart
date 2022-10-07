@@ -1,4 +1,5 @@
 import 'package:app_listagem/src/database/databaseHelper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../components/customField.dart';
@@ -17,6 +18,8 @@ class _AddPageState extends State<AddPage> {
   Gender? _humangender = Gender.feminino;
 
   final dbHelper = DatabaseHelper.instance;
+
+  final db = FirebaseFirestore.instance;
 
   final TextEditingController nameText = TextEditingController();
   final TextEditingController emailText = TextEditingController();
@@ -135,6 +138,14 @@ class _AddPageState extends State<AddPage> {
                 onPressed: () {
                   _addPatient();
                   Navigator.of(context).pushReplacementNamed('/');
+
+                  PatientModel patient = PatientModel();
+                  patient.name = nameText.text;
+                  patient.email = emailText.text;
+                  patient.gender = gender;
+                  patient.about = aboutText.text;
+
+                  db.collection('patients').add(patient.toJson()).then((DocumentReference doc) =>  print('DocumentSnapshot added with ID: ${doc.id}'));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
