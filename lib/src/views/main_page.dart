@@ -1,6 +1,7 @@
 import 'package:app_listagem/src/components/patientItem.dart';
 import 'package:app_listagem/src/database/databaseHelper.dart';
 import 'package:app_listagem/src/views/update_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,10 +14,11 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List<Map<String, dynamic>> _patients = [];
   final dbHelper = DatabaseHelper.instance;
+  final db = FirebaseFirestore.instance;
   bool _loading = true;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
     dbHelper.queryAllRows().then((list) {
       setState(() {
@@ -139,5 +141,16 @@ class _MainPageState extends State<MainPage> {
         return alerta;
       },
     );
+  }
+
+  Future<Map<String, dynamic>> listar () async {
+      Map<String, dynamic> list = Map<String, dynamic>();
+      await db.collection("patients").get().then((event) {
+      for (var doc in event.docs) {
+        print("${doc.id} => ${doc.data()}");
+        list = doc.data();
+      }
+      return list;
+    });
   }
 }
