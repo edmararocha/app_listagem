@@ -1,5 +1,4 @@
 import 'package:app_listagem/src/components/patientItem.dart';
-import 'package:app_listagem/src/database/databaseHelper.dart';
 import 'package:app_listagem/src/views/update_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final dbHelper = DatabaseHelper.instance;
   CollectionReference patientsCollection =
       FirebaseFirestore.instance.collection("patients");
   bool _loading = true;

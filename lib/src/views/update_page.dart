@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../components/customField.dart';
-import '../database/databaseHelper.dart';
 
 enum Gender { feminino, masculino }
 
@@ -21,7 +19,6 @@ class UpdatePage extends StatefulWidget {
 class _UpdatePageState extends State<UpdatePage> {
   Gender? _humangender = Gender.feminino;
 
-  final dbHelper = DatabaseHelper.instance;
   CollectionReference patientsCollection =
       FirebaseFirestore.instance.collection("patients");
 
