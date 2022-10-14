@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
 class PatientModel {
-  String? name;
-  String? email;
-  String? gender;
-  String? about;
+  late String name;
+  late String email;
+  late String gender;
+  late String about;
 
-  PatientModel({this.name, this.email, this.gender, this.about});
+  PatientModel({required this.name, required this.email, required this.gender, required this.about});
 
   PatientModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];

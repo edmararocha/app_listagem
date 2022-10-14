@@ -1,37 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../components/customField.dart';
 import '../database/databaseHelper.dart';
-import '../models/PatientModel.dart';
 
 enum Gender { feminino, masculino }
 
 class UpdatePage extends StatefulWidget {
-  const UpdatePage(
-      {super.key, this.id, this.name, this.email, this.gender, this.about});
+  const UpdatePage({super.key, this.patientDoc});
 
-  final int? id;
-  final String? name;
-  final String? email;
-  final String? gender;
-  final String? about;
+  final DocumentSnapshot? patientDoc;
 
   @override
   State<UpdatePage> createState() =>
       // ignore: no_logic_in_create_state
-      _UpdatePageState(id, name, email, gender, about);
+      _UpdatePageState(patientDoc!.id, patientDoc!['name'], patientDoc!['email'], patientDoc!['gender'],
+          patientDoc!['about']);
 }
 
 class _UpdatePageState extends State<UpdatePage> {
   Gender? _humangender = Gender.feminino;
 
   final dbHelper = DatabaseHelper.instance;
+  CollectionReference patientsCollection =
+      FirebaseFirestore.instance.collection("patients");
 
   TextEditingController nameText = TextEditingController();
   TextEditingController emailText = TextEditingController();
   TextEditingController aboutText = TextEditingController();
 
-  final int? id;
+  final String? id;
   final String? name;
   final String? email;
   String? gender;
@@ -41,6 +39,7 @@ class _UpdatePageState extends State<UpdatePage> {
 
   @override
   void initState() {
+    gender = widget.patientDoc!['gender'];
     _verifyGender();
     nameText.text = name!;
     emailText.text = email!;
@@ -157,7 +156,7 @@ class _UpdatePageState extends State<UpdatePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  _updatePatient();
+                  _updatePatient(widget.patientDoc!.id);
                   Navigator.of(context).pushReplacementNamed('/');
                 },
                 style: ElevatedButton.styleFrom(
@@ -179,14 +178,8 @@ class _UpdatePageState extends State<UpdatePage> {
     );
   }
 
-  _updatePatient() async {
-    PatientModel patient = PatientModel();
-    patient.name = nameText.text;
-    patient.email = emailText.text;
-    patient.gender = gender;
-    patient.about = aboutText.text;
-
-    await dbHelper.update(patient, id!);
+  Future<void> _updatePatient(String id) async {
+    patientsCollection.doc(id).update({"name": nameText.text, "email": emailText.text, "gender": gender, "about": aboutText.text});
   }
 
   _verifyGender() {

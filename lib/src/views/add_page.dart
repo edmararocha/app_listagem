@@ -139,13 +139,15 @@ class _AddPageState extends State<AddPage> {
                   _addPatient();
                   Navigator.of(context).pushReplacementNamed('/');
 
-                  PatientModel patient = PatientModel();
-                  patient.name = nameText.text;
-                  patient.email = emailText.text;
-                  patient.gender = gender;
-                  patient.about = aboutText.text;
+                  PatientModel patient = PatientModel(
+                      name: nameText.text,
+                      email: emailText.text,
+                      gender: gender,
+                      about: aboutText.text);
 
-                  db.collection('patients').add(patient.toJson()).then((DocumentReference doc) =>  print('DocumentSnapshot added with ID: ${doc.id}'));
+                  db.collection('patients').add(patient.toJson()).then(
+                      (DocumentReference doc) =>
+                          print('DocumentSnapshot added with ID: ${doc.id}'));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
@@ -167,11 +169,11 @@ class _AddPageState extends State<AddPage> {
   }
 
   _addPatient() async {
-    PatientModel patient = PatientModel();
-    patient.name = nameText.text;
-    patient.email = emailText.text;
-    patient.gender = gender;
-    patient.about = aboutText.text;
+    PatientModel patient = PatientModel(
+        name: nameText.text,
+        email: emailText.text,
+        gender: gender,
+        about: aboutText.text);
 
     await dbHelper.insert(patient);
   }
